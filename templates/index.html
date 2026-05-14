@@ -5,9 +5,14 @@
 {% block content %}
 <section class="hero-card">
   <div class="hero-copy">
-    <p class="eyebrow">Fase 1</p>
+    <p class="eyebrow">Fase 2 · Mesa visual</p>
     <h2>Partida local en navegador</h2>
-    <p>Agrega entre 2 y 6 jugadores. La partida vive en memoria y se pierde al reiniciar el servidor.</p>
+    <p>Agrega entre 2 y 6 jugadores. Todos juegan desde este navegador, con cartas privadas visibles solo para el jugador en turno.</p>
+    <ul class="feature-list">
+      <li>Motor Texas Hold'em con side pots y all-in.</li>
+      <li>Flujo local sin login, salas ni base de datos.</li>
+      <li>Acciones por formularios: retirarse, pasar, igualar y subir.</li>
+    </ul>
   </div>
 
   <form class="start-form" action="{{ url_for('game.start') }}" method="post">

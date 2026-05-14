@@ -15,7 +15,12 @@
         <p>{{ winner.hand_name }}</p>
         <div class="cards-row">
           {% for card in winner.cards %}
-            <span class="card private">{{ card }}</span>
+            <span class="playing-card private {{ card.color }}" title="{{ card.code }}">
+              <span class="card-rank">{{ card.rank }}</span>
+              <span class="card-suit">{{ card.suit }}</span>
+            </span>
+          {% else %}
+            <span class="muted">Gano porque los demas se retiraron.</span>
           {% endfor %}
         </div>
       </article>
@@ -23,18 +28,28 @@
   </div>
 
   <div class="cards-row final-community">
-    {% for card in game.community_cards %}
-      <span class="card">{{ card }}</span>
+    {% for card in community_cards %}
+      <span class="playing-card {{ card.color }}" title="{{ card.code }}">
+        <span class="card-rank">{{ card.rank }}</span>
+        <span class="card-suit">{{ card.suit }}</span>
+      </span>
     {% endfor %}
   </div>
 
   <h3>Jugadores</h3>
   <div class="players-list reveal-list">
-    {% for player in game.players %}
-      <article class="player-tile">
-        <h3>{{ player.name }}</h3>
-        <p>{{ player.chips }} fichas</p>
-        <p>{{ cards_text(player.hole_cards) }}</p>
+    {% for item in players_with_cards %}
+      <article class="player-seat reveal-seat">
+        <h3>{{ item.player.name }}</h3>
+        <p>{{ item.player.chips }} fichas</p>
+        <div class="cards-row mini-cards">
+          {% for card in item.cards %}
+            <span class="playing-card mini {{ card.color }}" title="{{ card.code }}">
+              <span class="card-rank">{{ card.rank }}</span>
+              <span class="card-suit">{{ card.suit }}</span>
+            </span>
+          {% endfor %}
+        </div>
       </article>
     {% endfor %}
   </div>

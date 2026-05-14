@@ -67,7 +67,8 @@ h2 { font-size: clamp(1.8rem, 4vw, 3.4rem); line-height: 1; }
   padding: clamp(24px, 5vw, 54px);
 }
 
-.hero-copy p { color: var(--muted); font-size: 1.1rem; line-height: 1.6; }
+.hero-copy p, .feature-list { color: var(--muted); font-size: 1.1rem; line-height: 1.6; }
+.feature-list { padding-left: 20px; }
 
 .start-form {
   display: grid;
@@ -136,6 +137,7 @@ dt { color: var(--muted); font-size: 0.8rem; }
 dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
 
 .felt-table {
+  position: relative;
   min-height: 520px;
   border: 14px solid #331d0c;
   border-radius: 44px;
@@ -149,6 +151,29 @@ dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
   align-content: center;
 }
 
+.pot-badge {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  place-items: center;
+  min-width: 120px;
+  padding: 10px 22px;
+  border-radius: 999px;
+  color: var(--ink);
+  background: linear-gradient(135deg, #f5d987, var(--gold));
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.24);
+}
+
+.pot-badge span {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.pot-badge strong { font-size: 1.45rem; }
+
 .community-row, .current-player-card { text-align: center; }
 .current-player-card { padding: 26px; background: rgba(5, 22, 15, 0.72); }
 
@@ -159,7 +184,7 @@ dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
   gap: 10px;
 }
 
-.card {
+.card, .playing-card {
   display: inline-grid;
   place-items: center;
   width: 54px;
@@ -172,25 +197,49 @@ dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
   font-weight: 700;
 }
 
+.playing-card {
+  position: relative;
+  grid-template-rows: 1fr 1fr;
+  align-items: center;
+  padding: 8px;
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+.playing-card.red { color: #b3202a; }
+.playing-card.black { color: #111715; }
+.playing-card.private { outline: 2px solid var(--gold); }
+.playing-card.mini { width: 42px; height: 58px; font-size: 0.9rem; }
+.card-rank { font-size: 1.25rem; line-height: 1; }
+.card-suit { font-size: 1.35rem; line-height: 1; }
+
 .card.private { outline: 2px solid var(--gold); }
 .muted { color: var(--muted); }
+.action-help { color: var(--muted); margin-top: -12px; }
 
 .action-form { display: grid; gap: 16px; margin-top: 22px; }
 .action-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.action-button { color: var(--ink); background: var(--cream); text-transform: capitalize; }
+.action-button { color: var(--ink); background: var(--cream); text-transform: capitalize; font-weight: 700; }
+.action-fold { background: #f0a29b; }
+.action-check { background: #c7d9cf; }
+.action-call { background: #f3ead4; }
+.action-raise { background: var(--gold); }
 .action-button:hover, .primary-button:hover { transform: translateY(-1px); filter: brightness(1.04); }
 .raise-input { width: min(260px, 100%); margin: 0 auto; text-align: left; }
 
 .players-list { display: grid; gap: 12px; }
-.player-tile {
+.player-tile, .player-seat {
   padding: 14px;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid transparent;
 }
-.player-tile h3 { margin-bottom: 6px; }
-.player-tile p { color: var(--muted); margin-bottom: 4px; }
-.player-tile.is-turn { border-color: var(--gold); background: rgba(224, 180, 85, 0.12); }
+.player-tile h3, .player-seat h3 { margin-bottom: 6px; }
+.player-tile p, .player-seat p { color: var(--muted); margin-bottom: 4px; }
+.player-tile.is-turn, .player-seat.is-current { border-color: var(--gold); background: rgba(224, 180, 85, 0.12); }
+.player-seat.is-folded { opacity: 0.58; }
+.player-seat.is-all-in { border-color: rgba(155, 225, 141, 0.72); }
+.reveal-seat { min-height: 128px; }
+.mini-cards { justify-content: flex-start; margin-top: 10px; }
 
 .log-panel { margin-top: 18px; }
 .action-log { margin: 0; padding-left: 20px; color: var(--muted); }
@@ -219,5 +268,8 @@ dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
 @media (max-width: 620px) {
   .start-form { grid-template-columns: 1fr; }
   .felt-table { border-width: 8px; border-radius: 30px; padding: 18px; }
-  .card { width: 46px; height: 64px; }
+  .card, .playing-card { width: 46px; height: 64px; }
+  .pot-badge { position: static; transform: none; margin: 0 auto; }
+  .action-buttons { display: grid; grid-template-columns: 1fr 1fr; }
+  .action-button { width: 100%; }
 }

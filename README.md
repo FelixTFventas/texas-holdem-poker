@@ -20,6 +20,9 @@ Motor inicial de Texas Hold'em en Python puro con una interfaz Flask local basic
 - Demo por consola.
 - Modo consola interactivo con `console_game.py`.
 - Interfaz Flask local con formularios HTML.
+- Cartas visuales con simbolos de palo y colores.
+- Acciones web en espanol y ayuda de turno.
+- Mesa responsive con jugador actual destacado.
 - Pruebas unitarias del motor.
 
 ## Instalar dependencias

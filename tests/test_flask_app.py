@@ -58,6 +58,8 @@ def test_table_shows_started_game(client):
     assert response.status_code == 200
     assert b"Cartas comunitarias" in response.data
     assert b"Jugador actual" in response.data
+    assert b"playing-card" in response.data
+    assert "Igualar".encode() in response.data
 
 
 def test_action_executes_valid_move(client):
@@ -101,3 +103,4 @@ def test_finished_page_renders_when_hand_is_finished(client):
 
     assert response.status_code == 200
     assert b"Mano finalizada" in response.data
+    assert b"winner-tile" in response.data
