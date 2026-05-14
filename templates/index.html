@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Iniciar partida{% endblock %}
+
+{% block content %}
+<section class="hero-card">
+  <div class="hero-copy">
+    <p class="eyebrow">Fase 1</p>
+    <h2>Partida local en navegador</h2>
+    <p>Agrega entre 2 y 6 jugadores. La partida vive en memoria y se pierde al reiniciar el servidor.</p>
+  </div>
+
+  <form class="start-form" action="{{ url_for('game.start') }}" method="post">
+    <label>Jugador 1 <input name="player1" value="Ana" required></label>
+    <label>Jugador 2 <input name="player2" value="Luis" required></label>
+    <label>Jugador 3 <input name="player3" value="Marta"></label>
+    <label>Jugador 4 <input name="player4"></label>
+    <label>Jugador 5 <input name="player5"></label>
+    <label>Jugador 6 <input name="player6"></label>
+    <button class="primary-button" type="submit">Iniciar mano</button>
+  </form>
+</section>
+{% endblock %}

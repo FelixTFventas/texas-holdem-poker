@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Resultado{% endblock %}
+
+{% block content %}
+<section class="result-card">
+  <p class="eyebrow">Showdown</p>
+  <h2>Mano finalizada</h2>
+
+  <div class="winner-grid">
+    {% for winner in winners %}
+      <article class="winner-tile">
+        <p>Ganador</p>
+        <h3>{{ winner.player.name }}</h3>
+        <p>{{ winner.hand_name }}</p>
+        <div class="cards-row">
+          {% for card in winner.cards %}
+            <span class="card private">{{ card }}</span>
+          {% endfor %}
+        </div>
+      </article>
+    {% endfor %}
+  </div>
+
+  <div class="cards-row final-community">
+    {% for card in game.community_cards %}
+      <span class="card">{{ card }}</span>
+    {% endfor %}
+  </div>
+
+  <h3>Jugadores</h3>
+  <div class="players-list reveal-list">
+    {% for player in game.players %}
+      <article class="player-tile">
+        <h3>{{ player.name }}</h3>
+        <p>{{ player.chips }} fichas</p>
+        <p>{{ cards_text(player.hole_cards) }}</p>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="panel log-panel">
+  <p class="eyebrow">Historial</p>
+  <ol class="action-log">
+    {% for entry in game.action_log %}
+      <li>{{ entry.stage }} · {{ entry.player }} hizo {{ entry.action }}{% if entry.action == 'raise' %} {{ entry.amount }}{% endif %}</li>
+    {% else %}
+      <li>La mano termino sin acciones registradas.</li>
+    {% endfor %}
+  </ol>
+</section>
+{% endblock %}
