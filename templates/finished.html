@@ -3,7 +3,7 @@
 {% block title %}Resultado{% endblock %}
 
 {% block content %}
-<section class="result-card">
+<section class="result-card final-showdown">
   <p class="eyebrow">Showdown</p>
   <h2>Mano finalizada</h2>
 
@@ -15,9 +15,10 @@
         <p>{{ winner.hand_name }}</p>
         <div class="cards-row">
           {% for card in winner.cards %}
-            <span class="playing-card private {{ card.color }}" title="{{ card.code }}">
-              <span class="card-rank">{{ card.rank }}</span>
-              <span class="card-suit">{{ card.suit }}</span>
+            <span class="playing-card private showdown-card {{ card.color }}" title="{{ card.code }}" style="--deal-index: {{ loop.index0 }}">
+              <span class="card-corner card-corner-top"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
+              <span class="card-suit-center">{{ card.suit }}</span>
+              <span class="card-corner card-corner-bottom"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
             </span>
           {% else %}
             <span class="muted">Gano porque los demas se retiraron.</span>
@@ -29,9 +30,10 @@
 
   <div class="cards-row final-community">
     {% for card in community_cards %}
-      <span class="playing-card {{ card.color }}" title="{{ card.code }}">
-        <span class="card-rank">{{ card.rank }}</span>
-        <span class="card-suit">{{ card.suit }}</span>
+      <span class="playing-card {{ card.color }}" title="{{ card.code }}" style="--deal-index: {{ loop.index0 }}">
+        <span class="card-corner card-corner-top"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
+        <span class="card-suit-center">{{ card.suit }}</span>
+        <span class="card-corner card-corner-bottom"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
       </span>
     {% endfor %}
   </div>
@@ -45,8 +47,9 @@
         <div class="cards-row mini-cards">
           {% for card in item.cards %}
             <span class="playing-card mini {{ card.color }}" title="{{ card.code }}">
-              <span class="card-rank">{{ card.rank }}</span>
-              <span class="card-suit">{{ card.suit }}</span>
+              <span class="card-corner card-corner-top"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
+              <span class="card-suit-center">{{ card.suit }}</span>
+              <span class="card-corner card-corner-bottom"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
             </span>
           {% endfor %}
         </div>
@@ -59,7 +62,7 @@
   <p class="eyebrow">Historial</p>
   <ol class="action-log">
     {% for entry in game.action_log %}
-      <li>{{ entry.stage }} · {{ entry.player }} hizo {{ entry.action }}{% if entry.action == 'raise' %} {{ entry.amount }}{% endif %}</li>
+      <li><span>{{ entry.stage }}</span><strong>{{ entry.player }}</strong> hizo {{ entry.action }}{% if entry.action == 'raise' %} {{ entry.amount }}{% endif %}</li>
     {% else %}
       <li>La mano termino sin acciones registradas.</li>
     {% endfor %}

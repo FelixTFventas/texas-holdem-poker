@@ -24,27 +24,49 @@
     {% endif %}
   </aside>
 
-  <section class="felt-table">
-    <div class="pot-badge">
-      <span>Bote</span>
-      <strong>{{ public_state.pot }}</strong>
+  <section class="felt-table premium-table">
+    <div class="table-fx-ring"></div>
+
+    <div class="table-seats table-seats-local">
+      {% for player in public_state.players %}
+        <article class="table-seat seat-{{ loop.index }} {% if player.name == public_state.current_player %}is-current{% endif %} {% if player.folded %}is-folded{% endif %} {% if player.all_in %}is-all-in{% endif %}">
+          <div class="seat-avatar">{{ player.name[0] }}</div>
+          <div>
+            <h3>{{ player.name }}</h3>
+            <p>{{ player.chips }} fichas · {{ 'Fold' if player.folded else 'All-in' if player.all_in else 'Activo' }}</p>
+          </div>
+        </article>
+      {% endfor %}
     </div>
 
-    <div class="community-row">
-      <p class="eyebrow">Cartas comunitarias</p>
-      <div class="cards-row">
-        {% for card in community_cards %}
-          <span class="playing-card {{ card.color }}" title="{{ card.code }}">
-            <span class="card-rank">{{ card.rank }}</span>
-            <span class="card-suit">{{ card.suit }}</span>
-          </span>
-        {% else %}
-          <span class="muted">Aun no hay cartas comunitarias</span>
-        {% endfor %}
+    <div class="table-core">
+      <div class="pot-badge chip-pot">
+        <span>Bote</span>
+        <strong>{{ public_state.pot }}</strong>
+        <div class="chip-stack" aria-hidden="true">
+          <span class="chip chip-red"></span>
+          <span class="chip chip-green"></span>
+          <span class="chip chip-gold"></span>
+        </div>
+      </div>
+
+      <div class="community-row">
+        <p class="eyebrow">Cartas comunitarias</p>
+        <div class="cards-row">
+          {% for card in community_cards %}
+            <span class="playing-card {{ card.color }}" title="{{ card.code }}" style="--deal-index: {{ loop.index0 }}">
+              <span class="card-corner card-corner-top"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
+              <span class="card-suit-center">{{ card.suit }}</span>
+              <span class="card-corner card-corner-bottom"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
+            </span>
+          {% else %}
+            <span class="muted">Aun no hay cartas comunitarias</span>
+          {% endfor %}
+        </div>
       </div>
     </div>
 
-    <div class="current-player-card">
+    <div class="current-player-card command-console">
       <p class="eyebrow">Jugador actual</p>
       <h2>{{ current_player.name }}</h2>
       <p class="action-help">
@@ -56,9 +78,10 @@
       </p>
       <div class="cards-row private-cards">
         {% for card in hole_cards %}
-          <span class="playing-card private {{ card.color }}" title="{{ card.code }}">
-            <span class="card-rank">{{ card.rank }}</span>
-            <span class="card-suit">{{ card.suit }}</span>
+          <span class="playing-card private {{ card.color }}" title="{{ card.code }}" style="--deal-index: {{ loop.index0 }}">
+            <span class="card-corner card-corner-top"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
+            <span class="card-suit-center">{{ card.suit }}</span>
+            <span class="card-corner card-corner-bottom"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
           </span>
         {% endfor %}
       </div>
@@ -97,7 +120,7 @@
   <p class="eyebrow">Historial</p>
   <ol class="action-log">
     {% for entry in public_state.action_log %}
-      <li>{{ entry.stage }} · {{ entry.player }} hizo {{ entry.action }}{% if entry.action == 'raise' %} {{ entry.amount }}{% endif %}</li>
+      <li><span>{{ entry.stage }}</span><strong>{{ entry.player }}</strong> hizo {{ entry.action }}{% if entry.action == 'raise' %} {{ entry.amount }}{% endif %}</li>
     {% else %}
       <li>No hay acciones todavia.</li>
     {% endfor %}

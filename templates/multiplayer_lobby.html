@@ -3,32 +3,54 @@
 {% block title %}Multiplayer local{% endblock %}
 
 {% block content %}
-<section class="hero-card multiplayer-shell" data-view="lobby">
-  <div class="hero-copy">
-    <p class="eyebrow">Fase 3 · Multiplayer local</p>
-    <h2>Crear o unirse a una sala</h2>
-    <p>Juega en tiempo real desde varios navegadores conectados a la misma red local.</p>
-    <ul class="feature-list">
-      <li>Las salas viven en memoria mientras el servidor esta activo.</li>
-      <li>Cada jugador recibira solo sus cartas privadas.</li>
-      <li>Para celulares usa la IP local de esta computadora.</li>
-    </ul>
+<section class="hero-card multiplayer-shell multiplayer-lobby" data-view="lobby">
+  <div class="hero-copy lobby-intro">
+    <p class="eyebrow">Emerald Room · Multiplayer local</p>
+    <h2>Tu mesa privada en la red local</h2>
+    <p>Abre una sala desde esta computadora y comparte el enlace con jugadores conectados al mismo WiFi o Ethernet.</p>
+    <div class="network-note">
+      <span>URL para invitados</span>
+      <strong>http://IP-DE-ESTA-PC:5000/multiplayer</strong>
+      <p>Usa la IP local real del servidor, no 127.0.0.1 desde otros equipos.</p>
+    </div>
     <p id="connection-status" class="connection-status">Conectando...</p>
   </div>
 
-  <div class="start-form multiplayer-form">
-    <label>Tu nombre
-      <input id="player-name" autocomplete="off" value="Ana">
-    </label>
-    <button id="create-room" class="primary-button" type="button">Crear sala</button>
+  <div class="lobby-actions" aria-label="Acciones multiplayer">
+    <article class="lobby-card create-card">
+      <p class="eyebrow">Crear mesa</p>
+      <h3>Ser host</h3>
+      <p>El host inicia la partida y puede abrir una nueva mano cuando termine.</p>
+      <label>Tu nombre
+        <input id="player-name" autocomplete="off" value="Ana">
+      </label>
+      <button id="create-room" class="primary-button" type="button">Crear sala privada</button>
+    </article>
 
-    <label>Codigo de sala
-      <input id="room-code" autocomplete="off" maxlength="4" placeholder="K7QX">
-    </label>
-    <button id="join-room" class="ghost-button" type="button">Unirse</button>
+    <article class="lobby-card join-card">
+      <p class="eyebrow">Unirse</p>
+      <h3>Entrar con codigo</h3>
+      <p>Pide al host el codigo de 4 letras o abre directamente el enlace de la sala.</p>
+      <label>Codigo de sala
+        <input id="room-code" autocomplete="off" maxlength="4" placeholder="K7QX">
+      </label>
+      <button id="join-room" class="ghost-button" type="button">Entrar a la sala</button>
+    </article>
 
     <p id="room-error" class="message error hidden"></p>
   </div>
+</section>
+
+<section class="lobby-guide panel">
+  <div>
+    <p class="eyebrow">Antes de jugar</p>
+    <h3>Checklist local</h3>
+  </div>
+  <ul class="guide-steps">
+    <li>Servidor activo con <code>python app.py</code>.</li>
+    <li>Todos conectados a la misma red local.</li>
+    <li>Firewall de Windows permitiendo Python en red privada.</li>
+  </ul>
 </section>
 {% endblock %}
 

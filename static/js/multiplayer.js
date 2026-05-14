@@ -48,10 +48,26 @@ function showNotice(message) {
   notice.classList.remove("hidden")
 }
 
+function copyText(text) {
+  if (navigator.clipboard && window.isSecureContext) {
+    return navigator.clipboard.writeText(text)
+  }
+  const textarea = document.createElement("textarea")
+  textarea.value = text
+  textarea.setAttribute("readonly", "")
+  textarea.style.position = "fixed"
+  textarea.style.opacity = "0"
+  document.body.appendChild(textarea)
+  textarea.select()
+  document.execCommand("copy")
+  document.body.removeChild(textarea)
+  return Promise.resolve()
+}
+
 function cardHtml(code, extraClass = "") {
   const rank = code[0]
   const suit = suits[code[1].toLowerCase()]
-  return `<span class="playing-card ${extraClass} ${suit.color}" title="${code}"><span class="card-rank">${rank}</span><span class="card-suit">${suit.symbol}</span></span>`
+  return `<span class="playing-card ${extraClass} ${suit.color}" title="${code}"><span class="card-corner card-corner-top"><span>${rank}</span><span>${suit.symbol}</span></span><span class="card-suit-center">${suit.symbol}</span><span class="card-corner card-corner-bottom"><span>${rank}</span><span>${suit.symbol}</span></span></span>`
 }
 
 function renderCards(targetId, cards, emptyText) {
@@ -76,6 +92,17 @@ function renderRoom(room) {
   const storedName = window.sessionStorage.getItem(`room:${room.code}:name`)
   const ownSeat = room.players.find((player) => player.name === storedName)
   isCurrentClientHost = Boolean(ownSeat?.is_host)
+  const host = room.players.find((player) => player.is_host)
+  const hostStatus = byId("host-status")
+  if (hostStatus) {
+    if (!ownSeat) {
+      hostStatus.textContent = host ? `Host: ${host.name}. Unete para tomar asiento.` : "Unete para tomar asiento."
+    } else if (isCurrentClientHost) {
+      hostStatus.textContent = room.players.length >= 2 ? "Eres host. Puedes iniciar la partida." : "Eres host. Esperando al menos 1 jugador mas."
+    } else {
+      hostStatus.textContent = host ? `Host: ${host.name}. Esperando inicio.` : "Esperando host."
+    }
+  }
   const startButton = byId("start-game")
   if (startButton) {
     startButton.classList.toggle("hidden", !(isCurrentClientHost && room.players.length >= 2 && !room.started))
@@ -115,6 +142,18 @@ function renderState(payload) {
       </article>
     `).join("")
   }
+  const tableSeats = byId("mp-table-seats")
+  if (tableSeats) {
+    tableSeats.innerHTML = publicState.players.map((player, index) => `
+      <article class="table-seat seat-${index + 1} ${player.name === publicState.current_player ? "is-current" : ""} ${player.folded ? "is-folded" : ""} ${player.all_in ? "is-all-in" : ""}">
+        <div class="seat-avatar">${player.name[0]}</div>
+        <div>
+          <h3>${player.name}</h3>
+          <p>${player.chips} fichas · ${player.folded ? "Fold" : player.all_in ? "All-in" : "Activo"}</p>
+        </div>
+      </article>
+    `).join("")
+  }
 
   const actions = byId("mp-actions")
   if (actions) {
@@ -130,7 +169,7 @@ function renderState(payload) {
   const log = byId("mp-log")
   if (log) {
     log.innerHTML = publicState.action_log.length ? publicState.action_log.map((entry) => `
-      <li>${entry.stage} · ${entry.player} hizo ${entry.action}${entry.action === "raise" ? ` ${entry.amount}` : ""}</li>
+      <li><span>${entry.stage}</span><strong>${entry.player}</strong> hizo ${entry.action}${entry.action === "raise" ? ` ${entry.amount}` : ""}</li>
     `).join("") : "<li>Sin acciones todavia.</li>"
   }
 }
@@ -198,7 +237,15 @@ document.addEventListener("click", (event) => {
   }
   if (event.target?.id === "join-room") {
     const roomCode = byId("room-code")?.value || ""
-    window.location.href = `/multiplayer/room/${roomCode.trim().toUpperCase()}`
+    const cleanRoomCode = roomCode.trim().toUpperCase()
+    if (!cleanRoomCode) {
+      showError("Escribe el codigo de sala para unirte.")
+      return
+    }
+    window.location.href = `/multiplayer/room/${cleanRoomCode}`
+  }
+  if (event.target?.id === "copy-room-link") {
+    copyText(window.location.href).then(() => showNotice("Enlace de sala copiado."))
   }
   if (event.target?.id === "join-current-room") {
     const roomCode = document.querySelector("[data-room-code]")?.dataset.roomCode
