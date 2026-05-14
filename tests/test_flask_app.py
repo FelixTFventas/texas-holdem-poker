@@ -25,7 +25,8 @@ def test_index_loads(client):
     response = client.get("/")
 
     assert response.status_code == 200
-    assert b"Partida local" in response.data
+    assert "Jugar multiplayer local".encode() in response.data
+    assert b"/multiplayer" in response.data
 
 
 def test_start_creates_game_and_redirects_to_table(client):
@@ -49,6 +50,20 @@ def test_table_redirects_without_game(client):
 
     assert response.status_code == 302
     assert response.headers["Location"].endswith("/")
+
+
+def test_multiplayer_lobby_loads(client):
+    response = client.get("/multiplayer")
+
+    assert response.status_code == 200
+    assert b"Multiplayer local" in response.data
+
+
+def test_multiplayer_room_loads(client):
+    response = client.get("/multiplayer/room/abcd")
+
+    assert response.status_code == 200
+    assert b"ABCD" in response.data
 
 
 def test_table_shows_started_game(client):

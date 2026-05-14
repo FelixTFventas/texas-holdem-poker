@@ -13,9 +13,13 @@
           <p class="eyebrow">Python + Flask</p>
           <h1>Texas Hold'em</h1>
         </div>
-        <form action="{{ url_for('game.reset') }}" method="post">
-          <button class="ghost-button" type="submit">Nueva partida</button>
-        </form>
+        <nav class="header-actions" aria-label="Accesos principales">
+          <a class="ghost-button" href="{{ url_for('game.index') }}">Inicio</a>
+          <a class="ghost-button" href="{{ url_for('game.multiplayer_lobby') }}">Multiplayer local</a>
+          <form action="{{ url_for('game.reset') }}" method="post">
+            <button class="ghost-button" type="submit">Nueva partida</button>
+          </form>
+        </nav>
       </header>
 
       {% with messages = get_flashed_messages(with_categories=true) %}
@@ -30,5 +34,6 @@
 
       {% block content %}{% endblock %}
     </main>
+    {% block scripts %}{% endblock %}
   </body>
 </html>

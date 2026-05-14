@@ -23,6 +23,9 @@ Motor inicial de Texas Hold'em en Python puro con una interfaz Flask local basic
 - Cartas visuales con simbolos de palo y colores.
 - Acciones web en espanol y ayuda de turno.
 - Mesa responsive con jugador actual destacado.
+- Multiplayer local inicial con Flask-SocketIO.
+- Salas en memoria para crear/unirse e iniciar partida.
+- Emision segura de estado publico y cartas privadas por jugador.
 - Pruebas unitarias del motor.
 
 ## Instalar dependencias
@@ -69,6 +72,46 @@ http://127.0.0.1:5000
 ```
 
 La version Flask usa una sola partida en memoria. Si reinicias el servidor, la partida se pierde.
+
+## Probar multiplayer local
+
+```bash
+python app.py
+```
+
+Abre el lobby multiplayer:
+
+```text
+http://127.0.0.1:5000/multiplayer
+```
+
+Para probar desde otro dispositivo de la misma red, usa la IP local de tu PC:
+
+```text
+http://TU-IP-LOCAL:5000/multiplayer
+```
+
+Estado actual del multiplayer:
+
+- Crear sala.
+- Unirse por codigo.
+- Host de sala con permisos para iniciar partida y nueva mano.
+- Ver jugadores conectados.
+- Iniciar partida con 2 a 6 jugadores.
+- Recibir estado publico y cartas privadas de forma separada.
+- Ejecutar acciones en tiempo real.
+- Actualizar la mesa automaticamente en todos los clientes.
+- Mostrar resultado final cuando termina la mano.
+- Iniciar nueva mano manteniendo fichas.
+- Reconexion basica con el mismo nombre.
+- Reasignacion de host si el host se desconecta.
+- Marcar desconexiones y hacer fold automatico si se desconecta el jugador en turno.
+- Limpieza de salas sin jugadores conectados.
+
+Pendiente del multiplayer:
+
+- Persistencia de salas si se reinicia el servidor.
+- Usuarios con login.
 
 ## Pendiente Para Fases Futuras
 

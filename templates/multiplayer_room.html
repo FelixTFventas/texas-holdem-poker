@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Sala {{ room_code }}{% endblock %}
+
+{% block content %}
+<section class="multiplayer-room" data-view="room" data-room-code="{{ room_code }}">
+  <aside class="panel room-panel">
+    <p class="eyebrow">Sala local</p>
+    <h2>{{ room_code }}</h2>
+    <p id="connection-status" class="connection-status">Conectando...</p>
+
+    <div id="join-panel" class="join-panel">
+      <label>Tu nombre
+        <input id="player-name" autocomplete="off">
+      </label>
+      <button id="join-current-room" class="primary-button" type="button">Unirse a sala</button>
+    </div>
+
+    <button id="start-game" class="primary-button hidden" type="button">Iniciar partida</button>
+    <button id="start-new-hand" class="primary-button hidden" type="button">Nueva mano</button>
+    <p id="room-error" class="message error hidden"></p>
+    <p id="room-notice" class="message success hidden"></p>
+
+    <h3>Jugadores</h3>
+    <div id="room-players" class="players-list"></div>
+  </aside>
+
+  <section class="felt-table multiplayer-table">
+    <div class="pot-badge">
+      <span>Bote</span>
+      <strong id="mp-pot">0</strong>
+    </div>
+
+    <div class="community-row">
+      <p class="eyebrow">Cartas comunitarias</p>
+      <div id="mp-community" class="cards-row"><span class="muted">Esperando inicio...</span></div>
+    </div>
+
+    <div class="current-player-card">
+      <p class="eyebrow">Tu mano</p>
+      <h2 id="mp-turn">Sala de espera</h2>
+      <p id="mp-stage" class="action-help">Unete a la sala para recibir estado.</p>
+      <div id="mp-hole-cards" class="cards-row private-cards"></div>
+      <label id="mp-raise-label" class="raise-input hidden">Cantidad para subir
+        <input id="mp-raise-amount" type="number" value="10" min="1">
+      </label>
+      <div id="mp-actions" class="action-buttons multiplayer-actions"></div>
+    </div>
+  </section>
+
+  <aside class="panel players-panel">
+    <p class="eyebrow">Mesa</p>
+    <div id="mp-players" class="players-list"></div>
+  </aside>
+</section>
+
+<section class="panel log-panel">
+  <p class="eyebrow">Historial</p>
+  <ol id="mp-log" class="action-log"><li>Sin acciones todavia.</li></ol>
+</section>
+
+<section id="mp-result" class="result-card hidden"></section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/multiplayer.js') }}"></script>
+{% endblock %}

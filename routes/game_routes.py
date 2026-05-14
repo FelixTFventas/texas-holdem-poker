@@ -91,6 +91,16 @@ def index():
     return render_template("index.html")
 
 
+@game_bp.route("/multiplayer")
+def multiplayer_lobby():
+    return render_template("multiplayer_lobby.html")
+
+
+@game_bp.route("/multiplayer/room/<code>")
+def multiplayer_room(code):
+    return render_template("multiplayer_room.html", room_code=code.strip().upper())
+
+
 @game_bp.route("/start", methods=["POST"])
 def start():
     global current_game

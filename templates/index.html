@@ -5,17 +5,19 @@
 {% block content %}
 <section class="hero-card">
   <div class="hero-copy">
-    <p class="eyebrow">Fase 2 · Mesa visual</p>
-    <h2>Partida local en navegador</h2>
-    <p>Agrega entre 2 y 6 jugadores. Todos juegan desde este navegador, con cartas privadas visibles solo para el jugador en turno.</p>
+    <p class="eyebrow">Texas Hold'em local</p>
+    <h2>Elige cómo jugar</h2>
+    <p>Juega una mano rápida en este navegador o crea una sala multiplayer para otros equipos de la misma red local.</p>
     <ul class="feature-list">
       <li>Motor Texas Hold'em con side pots y all-in.</li>
-      <li>Flujo local sin login, salas ni base de datos.</li>
-      <li>Acciones por formularios: retirarse, pasar, igualar y subir.</li>
+      <li>Modo clásico en un solo navegador.</li>
+      <li>Multiplayer local por Ethernet o WiFi con SocketIO.</li>
     </ul>
+    <a class="primary-link" href="{{ url_for('game.multiplayer_lobby') }}">Jugar multiplayer local</a>
   </div>
 
   <form class="start-form" action="{{ url_for('game.start') }}" method="post">
+    <p class="form-title">Partida clásica en este navegador</p>
     <label>Jugador 1 <input name="player1" value="Ana" required></label>
     <label>Jugador 2 <input name="player2" value="Luis" required></label>
     <label>Jugador 3 <input name="player3" value="Marta"></label>

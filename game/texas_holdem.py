@@ -57,6 +57,14 @@ class TexasHoldemGame:
         self.collect_blinds()
         self.deal_hole_cards()
 
+    def start_next_hand(self) -> None:
+        if self.stage != "finished":
+            raise ValueError("Cannot start a new hand before the current hand finishes")
+        if len([player for player in self.players if player.chips > 0]) < 2:
+            raise ValueError("At least 2 players with chips are required")
+        self.dealer_index = (self.dealer_index + 1) % len(self.players)
+        self.start_hand()
+
     def collect_blinds(self) -> None:
         small_index = (self.dealer_index + 1) % len(self.players)
         big_index = (self.dealer_index + 2) % len(self.players)

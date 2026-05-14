@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Multiplayer local{% endblock %}
+
+{% block content %}
+<section class="hero-card multiplayer-shell" data-view="lobby">
+  <div class="hero-copy">
+    <p class="eyebrow">Fase 3 · Multiplayer local</p>
+    <h2>Crear o unirse a una sala</h2>
+    <p>Juega en tiempo real desde varios navegadores conectados a la misma red local.</p>
+    <ul class="feature-list">
+      <li>Las salas viven en memoria mientras el servidor esta activo.</li>
+      <li>Cada jugador recibira solo sus cartas privadas.</li>
+      <li>Para celulares usa la IP local de esta computadora.</li>
+    </ul>
+    <p id="connection-status" class="connection-status">Conectando...</p>
+  </div>
+
+  <div class="start-form multiplayer-form">
+    <label>Tu nombre
+      <input id="player-name" autocomplete="off" value="Ana">
+    </label>
+    <button id="create-room" class="primary-button" type="button">Crear sala</button>
+
+    <label>Codigo de sala
+      <input id="room-code" autocomplete="off" maxlength="4" placeholder="K7QX">
+    </label>
+    <button id="join-room" class="ghost-button" type="button">Unirse</button>
+
+    <p id="room-error" class="message error hidden"></p>
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+<script src="{{ url_for('static', filename='js/multiplayer.js') }}"></script>
+{% endblock %}
