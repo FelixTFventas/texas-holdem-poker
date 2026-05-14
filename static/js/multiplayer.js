@@ -147,6 +147,11 @@ function renderState(payload) {
     tableSeats.innerHTML = publicState.players.map((player, index) => `
       <article class="table-seat seat-${index + 1} ${player.name === publicState.current_player ? "is-current" : ""} ${player.folded ? "is-folded" : ""} ${player.all_in ? "is-all-in" : ""}">
         <div class="seat-avatar">${player.name[0]}</div>
+        <div class="seat-chip-stack" aria-hidden="true">
+          <span class="seat-chip seat-chip-green"></span>
+          <span class="seat-chip seat-chip-cyan"></span>
+          <span class="seat-chip seat-chip-red"></span>
+        </div>
         <div>
           <h3>${player.name}</h3>
           <p>${player.chips} fichas · ${player.folded ? "Fold" : player.all_in ? "All-in" : "Activo"}</p>

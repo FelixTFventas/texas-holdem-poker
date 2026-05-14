@@ -31,6 +31,11 @@
       {% for player in public_state.players %}
         <article class="table-seat seat-{{ loop.index }} {% if player.name == public_state.current_player %}is-current{% endif %} {% if player.folded %}is-folded{% endif %} {% if player.all_in %}is-all-in{% endif %}">
           <div class="seat-avatar">{{ player.name[0] }}</div>
+          <div class="seat-chip-stack" aria-hidden="true">
+            <span class="seat-chip seat-chip-green"></span>
+            <span class="seat-chip seat-chip-cyan"></span>
+            <span class="seat-chip seat-chip-red"></span>
+          </div>
           <div>
             <h3>{{ player.name }}</h3>
             <p>{{ player.chips }} fichas · {{ 'Fold' if player.folded else 'All-in' if player.all_in else 'Activo' }}</p>
