@@ -151,11 +151,30 @@ def test_cleanup_empty_rooms_removes_disconnected_room():
     room = create_room("Ana", "sid-1")
     mark_disconnected("sid-1")
 
-    removed = cleanup_empty_rooms()
+    removed = cleanup_empty_rooms(grace_seconds=0)
 
     assert room["code"] in removed
     with pytest.raises(RoomError):
         get_room(room["code"])
+
+
+def test_cleanup_empty_rooms_keeps_room_during_redirect_grace():
+    room = create_room("Ana", "sid-1")
+    mark_disconnected("sid-1")
+
+    removed = cleanup_empty_rooms()
+
+    assert removed == []
+    assert get_room(room["code"]) == room
+
+
+def test_reconnect_clears_empty_room_marker():
+    room = create_room("Ana", "sid-1")
+    mark_disconnected("sid-1")
+
+    add_player_to_room(room["code"], "Ana", "sid-2")
+
+    assert room["empty_since"] is None
 
 
 def test_reconnect_after_game_started_keeps_player_index():

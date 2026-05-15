@@ -1,5 +1,6 @@
 import random
 import string
+import time
 
 from game import Player, TexasHoldemGame
 
@@ -7,6 +8,7 @@ from game import Player, TexasHoldemGame
 MAX_PLAYERS = 6
 ROOM_CODE_LENGTH = 4
 ROOM_CODE_ALPHABET = string.ascii_uppercase + string.digits
+EMPTY_ROOM_GRACE_SECONDS = 30
 
 
 class RoomError(ValueError):
@@ -34,6 +36,7 @@ def create_room(host_name: str, sid: str) -> dict:
         "game": None,
         "started": False,
         "host_sid": sid,
+        "empty_since": None,
         "players": [],
     }
     rooms[code] = room
@@ -62,6 +65,7 @@ def add_player_to_room(code: str, name: str, sid: str) -> dict:
             raise RoomError("Ese nombre ya esta en uso")
         existing["sid"] = sid
         existing["connected"] = True
+        room["empty_since"] = None
         if not any(player["sid"] == room.get("host_sid") for player in room["players"] if player["connected"]):
             room["host_sid"] = sid
         return existing
@@ -77,6 +81,7 @@ def add_player_to_room(code: str, name: str, sid: str) -> dict:
         "connected": True,
     }
     room["players"].append(participant)
+    room["empty_since"] = None
     return participant
 
 
@@ -125,6 +130,8 @@ def mark_disconnected(sid: str) -> tuple[str, dict, dict] | None:
     _, _, participant = found
     participant["connected"] = False
     assign_new_host_if_needed(found[1])
+    if not connected_players(found[1]):
+        found[1]["empty_since"] = time.monotonic()
     return found
 
 
@@ -146,10 +153,18 @@ def assign_new_host_if_needed(room: dict) -> dict | None:
     return connected[0]
 
 
-def cleanup_empty_rooms() -> list[str]:
+def cleanup_empty_rooms(grace_seconds: int = EMPTY_ROOM_GRACE_SECONDS) -> list[str]:
     removed = []
+    now = time.monotonic()
     for code, room in list(rooms.items()):
-        if not connected_players(room):
+        if connected_players(room):
+            room["empty_since"] = None
+            continue
+        empty_since = room.get("empty_since")
+        if empty_since is None:
+            room["empty_since"] = now
+            continue
+        if now - empty_since >= grace_seconds:
             removed.append(code)
             del rooms[code]
     return removed
