@@ -33,26 +33,28 @@
     <div id="room-players" class="players-list"></div>
   </aside>
 
-  <section class="felt-table multiplayer-table premium-table">
-    <div class="table-fx-ring"></div>
-    <div id="mp-table-seats" class="table-seats"></div>
+  <div class="table-center">
+    <section class="felt-table multiplayer-table premium-table">
+      <div class="table-fx-ring"></div>
+      <div id="mp-table-seats" class="table-seats"></div>
 
-    <div class="table-core">
-      <div class="pot-badge chip-pot">
-        <span>Bote</span>
-        <strong id="mp-pot">0</strong>
-        <div class="chip-stack" aria-hidden="true">
-          <span class="chip chip-red"></span>
-          <span class="chip chip-green"></span>
-          <span class="chip chip-gold"></span>
+      <div class="table-core">
+        <div class="pot-badge chip-pot">
+          <span>Bote</span>
+          <strong id="mp-pot">0</strong>
+          <div class="chip-stack" aria-hidden="true">
+            <span class="chip chip-red"></span>
+            <span class="chip chip-green"></span>
+            <span class="chip chip-gold"></span>
+          </div>
+        </div>
+
+        <div class="community-row">
+          <p class="eyebrow">Cartas comunitarias</p>
+          <div id="mp-community" class="cards-row"><span class="muted">Esperando inicio...</span></div>
         </div>
       </div>
-
-      <div class="community-row">
-        <p class="eyebrow">Cartas comunitarias</p>
-        <div id="mp-community" class="cards-row"><span class="muted">Esperando inicio...</span></div>
-      </div>
-    </div>
+    </section>
 
     <div class="current-player-card command-console">
       <p class="eyebrow">Tu mano</p>
@@ -64,7 +66,7 @@
       </label>
       <div id="mp-actions" class="action-buttons multiplayer-actions"></div>
     </div>
-  </section>
+  </div>
 
   <aside class="panel players-panel">
     <p class="eyebrow">Mesa</p>

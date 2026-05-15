@@ -174,6 +174,12 @@ input {
   align-items: start;
 }
 
+.table-center {
+  display: grid;
+  gap: 16px;
+  min-width: 0;
+}
+
 .panel { padding: 22px; }
 
 .stats-grid {
@@ -194,7 +200,7 @@ dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
 
 .felt-table {
   position: relative;
-  min-height: 640px;
+  min-height: 620px;
   border: 18px solid var(--table-rim-dark);
   border-radius: 999px;
   padding: 58px 74px;
@@ -210,8 +216,8 @@ dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
     0 0 42px rgba(51, 216, 232, 0.55),
     0 44px 110px rgba(0, 0, 0, 0.58);
   display: grid;
-  gap: 28px;
   align-content: center;
+  justify-items: center;
   isolation: isolate;
 }
 
@@ -250,8 +256,9 @@ dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
   position: relative;
   z-index: 2;
   display: grid;
+  align-self: center;
   justify-items: center;
-  gap: 18px;
+  gap: 14px;
   max-width: 660px;
   margin: 0 auto;
 }
@@ -316,25 +323,43 @@ dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
 
 .community-row, .current-player-card { text-align: center; }
 .community-row {
-  padding: 14px 18px;
+  padding: 12px 18px 14px;
   border-radius: 22px;
   background: rgba(0, 0, 0, 0.07);
   border: 1px solid rgba(116, 255, 239, 0.08);
   box-shadow: inset 0 0 34px rgba(0,0,0,0.18);
 }
 .current-player-card {
-  padding: 20px 24px;
-  background: linear-gradient(180deg, rgba(9, 21, 25, 0.92), rgba(7, 12, 14, 0.88));
-  border-color: rgba(71, 221, 236, 0.36);
-  box-shadow: 0 18px 46px rgba(0,0,0,0.42), 0 0 28px rgba(51, 216, 232, 0.2), inset 0 1px 0 rgba(255,255,255,0.1);
+  padding: 14px 18px 16px;
+  background:
+    linear-gradient(180deg, rgba(10, 28, 30, 0.78), rgba(4, 12, 13, 0.7)),
+    radial-gradient(ellipse at 50% 0%, rgba(51,216,232,0.16), transparent 68%);
+  border-color: rgba(71, 221, 236, 0.26);
+  box-shadow: 0 12px 34px rgba(0,0,0,0.28), 0 0 22px rgba(51, 216, 232, 0.13), inset 0 1px 0 rgba(255,255,255,0.09);
+}
+.current-player-card .eyebrow { margin-bottom: 4px; }
+.current-player-card h2 {
+  margin-bottom: 8px;
+  font-size: clamp(1.65rem, 3vw, 2.5rem);
 }
 .command-console {
-  position: absolute;
+  position: relative;
   z-index: 4;
-  left: 50%;
-  bottom: 22px;
-  transform: translateX(-50%);
-  width: min(600px, calc(100% - 96px));
+  width: 100%;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.command-console::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(51,216,232,0.18), transparent);
+  opacity: 0.7;
+}
+.command-console > * {
+  position: relative;
 }
 
 .cards-row {
@@ -404,12 +429,14 @@ dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
 
 .card.private { outline: 2px solid var(--gold); }
 .muted { color: var(--muted); }
-.action-help { color: var(--muted); margin-top: -12px; }
+.action-help { color: var(--muted); margin: 0 0 10px; }
 
 .private-cards .playing-card + .playing-card { margin-left: -14px; }
-.private-cards .playing-card { width: 70px; height: 100px; }
+.private-cards .playing-card { width: 54px; height: 76px; border-radius: 12px; }
+.private-cards .card-suit-center { font-size: 1.55rem; }
+.private-cards .card-corner { font-size: 0.62rem; }
 
-.action-form { display: grid; gap: 16px; margin-top: 22px; }
+.action-form { display: grid; gap: 10px; margin-top: 12px; }
 .action-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .action-button {
   color: #041014;
@@ -423,7 +450,8 @@ dd { margin: 4px 0 0; font-size: 1.35rem; color: var(--gold); }
 .action-call { background: linear-gradient(180deg, #dffff7, #4fd4c7); }
 .action-raise { background: linear-gradient(180deg, #d8fff7, var(--neon)); }
 .action-button:hover, .primary-button:hover, .primary-link:hover, .ghost-button:hover { transform: translateY(-1px); filter: brightness(1.06); }
-.raise-input { width: min(260px, 100%); margin: 0 auto; text-align: left; }
+.raise-input { width: min(240px, 100%); margin: 0 auto; text-align: left; }
+.raise-input input { padding: 9px 12px; }
 
 .players-list { display: grid; gap: 12px; }
 .player-tile, .player-seat {

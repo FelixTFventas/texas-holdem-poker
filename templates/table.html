@@ -24,52 +24,54 @@
     {% endif %}
   </aside>
 
-  <section class="felt-table premium-table">
-    <div class="table-fx-ring"></div>
+  <div class="table-center">
+    <section class="felt-table premium-table">
+      <div class="table-fx-ring"></div>
 
-    <div class="table-seats table-seats-local">
-      {% for player in public_state.players %}
-        <article class="table-seat seat-{{ loop.index }} {% if player.name == public_state.current_player %}is-current{% endif %} {% if player.folded %}is-folded{% endif %} {% if player.all_in %}is-all-in{% endif %}">
-          <div class="seat-avatar">{{ player.name[0] }}</div>
-          <div class="seat-chip-stack" aria-hidden="true">
-            <span class="seat-chip seat-chip-green"></span>
-            <span class="seat-chip seat-chip-cyan"></span>
-            <span class="seat-chip seat-chip-red"></span>
-          </div>
-          <div>
-            <h3>{{ player.name }}</h3>
-            <p>{{ player.chips }} fichas · {{ 'Fold' if player.folded else 'All-in' if player.all_in else 'Activo' }}</p>
-          </div>
-        </article>
-      {% endfor %}
-    </div>
-
-    <div class="table-core">
-      <div class="pot-badge chip-pot">
-        <span>Bote</span>
-        <strong>{{ public_state.pot }}</strong>
-        <div class="chip-stack" aria-hidden="true">
-          <span class="chip chip-red"></span>
-          <span class="chip chip-green"></span>
-          <span class="chip chip-gold"></span>
-        </div>
+      <div class="table-seats table-seats-local">
+        {% for player in public_state.players %}
+          <article class="table-seat seat-{{ loop.index }} {% if player.name == public_state.current_player %}is-current{% endif %} {% if player.folded %}is-folded{% endif %} {% if player.all_in %}is-all-in{% endif %}">
+            <div class="seat-avatar">{{ player.name[0] }}</div>
+            <div class="seat-chip-stack" aria-hidden="true">
+              <span class="seat-chip seat-chip-green"></span>
+              <span class="seat-chip seat-chip-cyan"></span>
+              <span class="seat-chip seat-chip-red"></span>
+            </div>
+            <div>
+              <h3>{{ player.name }}</h3>
+              <p>{{ player.chips }} fichas · {{ 'Fold' if player.folded else 'All-in' if player.all_in else 'Activo' }}</p>
+            </div>
+          </article>
+        {% endfor %}
       </div>
 
-      <div class="community-row">
-        <p class="eyebrow">Cartas comunitarias</p>
-        <div class="cards-row">
-          {% for card in community_cards %}
-            <span class="playing-card {{ card.color }}" title="{{ card.code }}" style="--deal-index: {{ loop.index0 }}">
-              <span class="card-corner card-corner-top"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
-              <span class="card-suit-center">{{ card.suit }}</span>
-              <span class="card-corner card-corner-bottom"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
-            </span>
-          {% else %}
-            <span class="muted">Aun no hay cartas comunitarias</span>
-          {% endfor %}
+      <div class="table-core">
+        <div class="pot-badge chip-pot">
+          <span>Bote</span>
+          <strong>{{ public_state.pot }}</strong>
+          <div class="chip-stack" aria-hidden="true">
+            <span class="chip chip-red"></span>
+            <span class="chip chip-green"></span>
+            <span class="chip chip-gold"></span>
+          </div>
+        </div>
+
+        <div class="community-row">
+          <p class="eyebrow">Cartas comunitarias</p>
+          <div class="cards-row">
+            {% for card in community_cards %}
+              <span class="playing-card {{ card.color }}" title="{{ card.code }}" style="--deal-index: {{ loop.index0 }}">
+                <span class="card-corner card-corner-top"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
+                <span class="card-suit-center">{{ card.suit }}</span>
+                <span class="card-corner card-corner-bottom"><span>{{ card.rank }}</span><span>{{ card.suit }}</span></span>
+              </span>
+            {% else %}
+              <span class="muted">Aun no hay cartas comunitarias</span>
+            {% endfor %}
+          </div>
         </div>
       </div>
-    </div>
+    </section>
 
     <div class="current-player-card command-console">
       <p class="eyebrow">Jugador actual</p>
@@ -104,7 +106,7 @@
         {% endif %}
       </form>
     </div>
-  </section>
+  </div>
 
   <aside class="panel players-panel">
     <p class="eyebrow">Jugadores</p>
